@@ -154,6 +154,9 @@ UPROGS=\
 	$U/_grind\
 	$U/_wc\
 	$U/_zombie\
+	$U/_sleep\
+	$U/_pingpong\
+	$U/_find\
 
 
 ifeq ($(LAB),syscall)
@@ -244,6 +247,8 @@ format:
 ## FOR web handin
 ##
 
+diff:
+	git diff util-base HEAD > commit.patch
 
 WEBSUB := https://6828.scripts.mit.edu/2020/handin.py
 
