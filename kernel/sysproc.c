@@ -20,8 +20,9 @@ uint64 sys_fork(void) { return fork(); }
 
 uint64 sys_wait(void) {
   uint64 p;
-  if (argaddr(0, &p) < 0) return -1;
-  return wait(p);
+  int flag;
+  if (argaddr(0, &p) < 0|| argint(1, &flag) < 0) return -1;
+  return wait(p,flag);
 }
 
 uint64 sys_sbrk(void) {
@@ -81,3 +82,24 @@ uint64 sys_rename(void) {
   p->name[len] = '\0';
   return 0;
 }
+
+uint64 sys_yield(void) {
+  // 获取当前进程的 trapframe 结构体
+  struct trapframe *tf = myproc()->trapframe;
+
+  // 获取用户上下文中保存的 PC 值
+  uint64 pc = tf->epc;
+
+  // 打印 PC 值
+  printf("start to yield, user pc %p\n", pc);
+
+  // 调用内核中的 yield 函数，将当前进程挂起
+  yield();
+
+  return 0; // 返回成功
+}
+
+
+
+
+
