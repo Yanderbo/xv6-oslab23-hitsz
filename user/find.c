@@ -4,6 +4,7 @@
 #include "user/user.h"
 
 void find(char *path, char *file_name) {
+  char buf[512], *p;
   int fd;
   struct dirent de;
   struct stat st;
@@ -20,9 +21,8 @@ void find(char *path, char *file_name) {
   }
 
   if (st.type == T_DIR) {
-    char buf[512];
     strcpy(buf, path);
-    char *p = buf + strlen(buf);
+    p = buf + strlen(buf);
     *p++ = '/';
     
     while (read(fd, &de, sizeof(de)) == sizeof(de)) {
